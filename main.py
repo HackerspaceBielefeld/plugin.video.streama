@@ -12,8 +12,10 @@ from urlparse import parse_qsl
 import urllib, urllib2, cookielib
 import json
 
-username = ''
-password = ''
+addon = xbmcaddon.Addon('plugin.video.streama')
+url = addon.getSetting('url')
+username = addon.getSetting('username')
+password = addon.getSetting('password')
 
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
@@ -27,7 +29,7 @@ genres = opener.open('https://streama.example.net/dash/listGenres.json')
 
 # https://streama.example.net/tvShow/episodesForTvShow.json?id=35
 # https://streama.example.net/video/show.json?id=130
-# https://streama.example.net/dash/searchMedia.json?query=crowd 
+# https://streama.example.net/dash/searchMedia.json?query=crowd
 
 print shows.read()
 print movies.read()
