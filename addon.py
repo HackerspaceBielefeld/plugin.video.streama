@@ -36,7 +36,7 @@ genres = opener.open('https://streama.example.net/dash/listGenres.json')
 # https://streama.example.net/video/show.json?id=130
 # https://streama.example.net/dash/searchMedia.json?query=crowd
 
-print shows.read()
-print movies.read()
-print genericmovies.read()
-print genres.read()
+# print shows.read()
+# print movies.read()
+# print genericmovies.read()
+ #print genres.read()
