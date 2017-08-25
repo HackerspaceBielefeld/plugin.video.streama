@@ -14,11 +14,12 @@ from urllib import urlencode
 from urlparse import parse_qsl
 import xbmcgui
 import xbmcplugin
+import xbmcaddon
 
-# addon = xbmcaddon.Addon('plugin.video.streama')
-# url = addon.getSetting('url')
-# username = addon.getSetting('username')
-# password = addon.getSetting('password')
+addon = xbmcaddon.Addon('plugin.video.streama')
+streamaurl = addon.getSetting('url')
+username = addon.getSetting('username')
+password = addon.getSetting('password')
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
