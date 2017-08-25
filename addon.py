@@ -9,6 +9,9 @@ from __future__ import print_function
 
 import operator
 import routing
+import sys
+from urllib import urlencode
+from urlparse import parse_qsl
 from xbmcgui import ListItem
 from xbmcplugin import addDirectoryItem, endOfDirectory, setResolvedUrl, getSetting, setContent
 
