@@ -12,8 +12,8 @@ import routing
 import sys
 from urllib import urlencode
 from urlparse import parse_qsl
-from xbmcgui import ListItem
-from xbmcplugin import addDirectoryItem, endOfDirectory, setResolvedUrl, getSetting, setContent
+import xbmcgui
+import xbmcplugin
 
 # addon = xbmcaddon.Addon('plugin.video.streama')
 # url = addon.getSetting('url')
