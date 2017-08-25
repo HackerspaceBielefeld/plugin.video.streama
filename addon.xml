@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.streama" version="0.0.1" name="Streama" provider-name="HackerspaceBielefeld">
     <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.simplecache" version="1.0.0"/>
+      <import addon="xbmc.python" version="2.24.0"/>
+      <import addon="script.module.simplejson" version="3.3.0"/>
+      <import addon="script.module.requests" version="2.3.0"/>
+      <import addon="script.module.routing" version="0.2.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>

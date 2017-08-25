@@ -4,20 +4,24 @@
 # Created on: 24.08.2017
 # License: MIT
 
-import sys
-from urllib import urlencode
-from urlparse import parse_qsl
-import xbmcgui
-import xbmcplugin
 
-import xbmcaddon
-import urllib, urllib2, cookielib
-import json
+from __future__ import print_function
 
-addon = xbmcaddon.Addon('plugin.video.streama')
+import operator
+
+import routing
+from xbmcgui import ListItem
+from xbmcplugin import addDirectoryItem, endOfDirectory, setResolvedUrl, getSetting, setContent
+
+import resources.lib.http as http
+from resources.lib.helpers import maybe_json, calc_aspect, json_date_to_info
+
+plugin = routing.Plugin()
+
+# addon = xbmcaddon.Addon('plugin.video.streama')
 # url = addon.getSetting('url')
-username = addon.getSetting('username')
-password = addon.getSetting('password')
+# username = addon.getSetting('username')
+# password = addon.getSetting('password')
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
