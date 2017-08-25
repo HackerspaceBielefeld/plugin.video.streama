@@ -8,15 +8,9 @@
 from __future__ import print_function
 
 import operator
-
 import routing
 from xbmcgui import ListItem
 from xbmcplugin import addDirectoryItem, endOfDirectory, setResolvedUrl, getSetting, setContent
-
-import resources.lib.http as http
-from resources.lib.helpers import maybe_json, calc_aspect, json_date_to_info
-
-plugin = routing.Plugin()
 
 # addon = xbmcaddon.Addon('plugin.video.streama')
 # url = addon.getSetting('url')
