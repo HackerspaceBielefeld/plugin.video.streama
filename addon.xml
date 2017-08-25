@@ -4,7 +4,7 @@
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.simplecache" version="1.0.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
+    <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
@@ -14,7 +14,7 @@
         <platform>all</platform>
         <license>MIT</license>
         <source>https://github.com/HackerspaceBielefeld/plugin.video.streama</source>
-        <website>http://www.hackerspace-bielefeld.de.com</website>
+        <website>http://github.com/HackerspaceBielefeld/plugin.video.streama</website>
         <forum>https://forum.kodi.tv/showthread.php?tid=320484</forum>
         <news></news>
         <assets>
