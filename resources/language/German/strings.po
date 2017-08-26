@@ -1,0 +1,32 @@
+# Kodi language file
+# Addon Name: Streama
+# Addon id: plugin.video.streama
+# Addon version: 0.1
+# Addon Provider: HackerspaceBielefeld
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2017-08-26 13:37+0000\n"
+"PO-Revision-Date: 2017-08-26 13:37+0100\n"
+"Last-Translator: joen <joen@hackerspace-bielefeld.de>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#Settings
+
+msgctxt "#30200"
+msgid "Streama URL"
+msgstr "Streama URL"
+
+msgctxt "#30201"
+msgid "Username"
+msgstr "Benutzername"
+
+msgctxt "#30202"
+msgid "Password"
+msgstr "Passwort"
