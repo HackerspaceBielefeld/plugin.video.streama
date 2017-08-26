@@ -90,7 +90,7 @@ VIDEOS = {'New': [{'name': 'Crab',
                       'genre': 'Food'}
                      ]}
 
-STRVIDEOS =
+# STRVIDEOS =
 
 
 def get_url(**kwargs):
