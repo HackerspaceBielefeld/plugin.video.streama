@@ -28,17 +28,20 @@ login_data = urllib.urlencode({'username' : username, 'password' : password, 're
 opener.open(streamaurl + '/login/authenticate', login_data)
 
 # read 
-#shows = opener.open('https://streama.example.net/dash/listShows.json')
+shows = opener.open(streamaurl + '/dash/listShows.json')
 movies = opener.open(streamaurl + '/dash/listMovies.json')
-#genericmovies = opener.open('https://streama.example.net/dash/listGenericVideos.json')
-#genres = opener.open('https://streama.example.net/dash/listGenres.json')
+genericmovies = opener.open(streamaurl + '/dash/listGenericVideos.json')
+genres = opener.open(streamaurl + '/dash/listGenres.json')
 
 # https://streama.example.net/tvShow/episodesForTvShow.json?id=35
 # https://streama.example.net/video/show.json?id=130
 # https://streama.example.net/dash/searchMedia.json?query=crowd
 
-# convert received json string to python datastructure
+# convert received json strings to python datastructure
 movies_json = json.loads(movies.read())
+shows_json = json.loads(shows.read())
+genericmovies_json = json.loads(genericmovies.read())
+genres_json = json.loads(genres.read())
 
 # count the movies
 print("There are " + str(len(movies_json)) + " Movies!")
@@ -55,3 +58,20 @@ for i in range(0, len(movies_json)):
     print(movies_json[i]["title"])
     # print src-url
     print(movie_json["files"][0]["src"])
+
+print
+
+# Print shows
+print("There are " + str(len(shows_json)) + " Shows!")
+
+for i in range(0, len(shows_json)):
+        show = opener.open(streamaurl + '/tvShow/episodesForTvShow.json?id=' + str(shows_json[i]["id"]))
+        show_json = json.loads(show.read())
+
+        print(shows_json[i]["name"])
+        print("With " + str(len(show_json)) + " Episodes")
+
+        for i in range(0, len(show_json)):
+            print(show_json[i]["name"])
+        print
+
