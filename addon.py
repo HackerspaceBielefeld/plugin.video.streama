@@ -10,8 +10,10 @@ from __future__ import print_function
 import operator
 import routing
 import sys
-from urllib import urlencode
-from urlparse import parse_qsl
+import urllib
+import urllib2
+import urlparse
+import cookielib
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
@@ -20,6 +22,11 @@ addon = xbmcaddon.Addon('plugin.video.streama')
 streamaurl = addon.getSetting('url')
 username = addon.getSetting('username')
 password = addon.getSetting('password')
+
+cj = cookielib.CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
+opener.open(streamaurl + '/login/authenticate', login_data)
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
@@ -30,7 +37,7 @@ _handle = int(sys.argv[1])
 # Here we use a fixed set of properties simply for demonstrating purposes
 # In a "real life" plugin you will need to get info and links to video files/streams
 # from some web-site or online service.
-VIDEOS = {'Animals': [{'name': 'Crab',
+VIDEOS = {'New': [{'name': 'Crab',
                        'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/04/crab-screenshot.jpg',
                        'video': 'http://www.vidsplay.com/wp-content/uploads/2017/04/crab.mp4',
                        'genre': 'Animals'},
@@ -43,7 +50,7 @@ VIDEOS = {'Animals': [{'name': 'Crab',
                        'video': 'http://www.vidsplay.com/wp-content/uploads/2017/04/turtle.mp4',
                        'genre': 'Animals'}
                       ],
-            'Cars': [{'name': 'Postal Truck',
+            'Movies': [{'name': 'Postal Truck',
                       'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal-screenshot.jpg',
                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal.mp4',
                       'genre': 'Cars'},
@@ -56,7 +63,19 @@ VIDEOS = {'Animals': [{'name': 'Crab',
                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows.mp4',
                       'genre': 'Cars'}
                      ],
-            'Food': [{'name': 'Chicken',
+            'Shows': [{'name': 'Chicken',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbq_chicken-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbqchicken.mp4',
+                      'genre': 'Food'},
+                     {'name': 'Hamburger',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger.mp4',
+                      'genre': 'Food'},
+                     {'name': 'Pizza',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza.mp4',
+                      'genre': 'Food'},
+            'Genres': [{'name': 'Chicken',
                       'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbq_chicken-screenshot.jpg',
                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbqchicken.mp4',
                       'genre': 'Food'},
@@ -69,6 +88,8 @@ VIDEOS = {'Animals': [{'name': 'Crab',
                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza.mp4',
                       'genre': 'Food'}
                      ]}
+
+STRVIDEOS =
 
 
 def get_url(**kwargs):
