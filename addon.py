@@ -92,7 +92,7 @@ VIDEOS = {'New': [{'name': 'Crab',
                       'genre': 'Food'}
                      ]}
 
-# STRVIDEOS =
+STRVIDEOS = opener.open('https://streama.example.net/dash/listGenres.json')
 
 
 def get_url(**kwargs):
@@ -121,7 +121,8 @@ def get_categories():
     :return: The list of video categories
     :rtype: list
     """
-    return VIDEOS.iterkeys()
+    # return VIDEOS.iterkeys()
+    return STRVIDEOS.iterkeys()
 
 
 def get_videos(category):
