@@ -73,5 +73,13 @@ for i in range(0, len(shows_json)):
 
         for i in range(0, len(show_json)):
             print(show_json[i]["name"])
+            episode = opener.open(streamaurl + '/video/show.json?id=' + str(show_json[i]["id"]))
+            episode_json = json.loads(episode.read())
+
+            # only print url, if there is a file available
+            if str(episode_json["files"]) != '[]':
+                print(episode_json["files"][0]["src"])
+            else:
+                print("No file!")
         print
 
