@@ -92,7 +92,9 @@ VIDEOS = {'New': [{'name': 'Crab',
                       'genre': 'Food'}
                      ]}
 
-STRVIDEOS = opener.open('https://streama.example.net/dash/listGenres.json')
+# STRVIDEOS = opener.open('https://streama.example.net/dash/listGenres.json')
+# streama output genres
+#[{"id":1,"apiId":28,"name":"Action"},{"id":2,"apiId":12,"name":"Adventure"},{"id":3,"apiId":16,"name":"Animation"},{"id":4,"apiId":35,"name":"Comedy"},{"id":5,"apiId":80,"name":"Crime"},{"id":6,"apiId":99,"name":"Documentary"},{"id":7,"apiId":18,"name":"Drama"},{"id":8,"apiId":10751,"name":"Family"},{"id":9,"apiId":14,"name":"Fantasy"},{"id":10,"apiId":36,"name":"History"},{"id":11,"apiId":27,"name":"Horror"},{"id":12,"apiId":10402,"name":"Music"},{"id":13,"apiId":9648,"name":"Mystery"},{"id":14,"apiId":10749,"name":"Romance"},{"id":15,"apiId":878,"name":"Science Fiction"},{"id":16,"apiId":10770,"name":"TV Movie"},{"id":17,"apiId":53,"name":"Thriller"},{"id":18,"apiId":10752,"name":"War"},{"id":19,"apiId":37,"name":"Western"},{"id":20,"apiId":10759,"name":"Action & Adventure"},{"id":21,"apiId":10762,"name":"Kids"},{"id":22,"apiId":10763,"name":"News"},{"id":23,"apiId":10764,"name":"Reality"},{"id":24,"apiId":10765,"name":"Sci-Fi & Fantasy"},{"id":25,"apiId":10766,"name":"Soap"},{"id":26,"apiId":10767,"name":"Talk"},{"id":27,"apiId":10768,"name":"War & Politics"}]
 
 
 def get_url(**kwargs):
@@ -121,8 +123,8 @@ def get_categories():
     :return: The list of video categories
     :rtype: list
     """
-    # return VIDEOS.iterkeys()
-    return STRVIDEOS.iterkeys()
+    return VIDEOS.iterkeys()
+    # return STRVIDEOS.iterkeys()
 
 
 def get_videos(category):
