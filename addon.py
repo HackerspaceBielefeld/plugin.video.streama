@@ -11,6 +11,7 @@ import operator
 import routing
 import sys
 import urllib
+from urllib import urlencode
 import urllib2
 import urlparse
 from urlparse import parse_qsl
