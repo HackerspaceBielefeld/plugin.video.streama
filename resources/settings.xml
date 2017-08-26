@@ -3,6 +3,6 @@
     <category label="32001">
         <setting label="30200" type="text" id="url" default="https://streama.example.tld"/>
         <setting label="30201" type="text" id="username" default=""/>
-        <setting label="30200" type="text" id="password" option="hidden"  enable="!eq(-1,)" default=""/>
+        <setting label="30202" type="text" id="password" option="hidden"  enable="!eq(-1,)" default=""/>
     </category>
 </settings>
