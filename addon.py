@@ -13,6 +13,7 @@ import sys
 import urllib
 import urllib2
 import urlparse
+from urlparse import parse_qsl
 import cookielib
 import xbmcgui
 import xbmcplugin
