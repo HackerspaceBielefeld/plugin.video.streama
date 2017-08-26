@@ -32,6 +32,7 @@ shows = opener.open(streamaurl + '/dash/listShows.json')
 movies = opener.open(streamaurl + '/dash/listMovies.json')
 genericmovies = opener.open(streamaurl + '/dash/listGenericVideos.json')
 genres = opener.open(streamaurl + '/dash/listGenres.json')
+newreleases = opener.open(streamaurl + '/dash/listNewReleases.json')
 
 # https://streama.example.net/tvShow/episodesForTvShow.json?id=35
 # https://streama.example.net/video/show.json?id=130
@@ -42,6 +43,24 @@ movies_json = json.loads(movies.read())
 shows_json = json.loads(shows.read())
 genericmovies_json = json.loads(genericmovies.read())
 genres_json = json.loads(genres.read())
+newreleases_json = json.loads(newreleases.read())
+
+#print new releases
+print("There are " + str(len(newreleases_json)) + " new releases")
+for i in range (0, len(newreleases_json)):
+    try:
+        print(newreleases_json[i]["movie"]["title"])
+        newrelease = opener.open(streamaurl + '/video/show.json?id=' + str(newreleases_json[i]["movie"]["id"]))
+        newrelease_json = json.loads(newrelease.read())
+        print(newrelease_json["files"][0]["src"])
+    except:
+        foo = 42
+    try:
+        print(newreleases_json[i]["tvShow"]["name"])
+    except:
+        foo = 23
+print
+print
 
 # count the movies
 print("There are " + str(len(movies_json)) + " Movies!")
@@ -58,6 +77,13 @@ for i in range(0, len(movies_json)):
     print(movies_json[i]["title"])
     # print src-url
     print(movie_json["files"][0]["src"])
+
+print
+
+# print genres
+print ("There are " + str(len(genres_json)) + " Genres!")
+for i in range(0, len(genres_json)):
+    print(genres_json[i]["name"])
 
 print
 
@@ -81,5 +107,7 @@ for i in range(0, len(shows_json)):
                 print(episode_json["files"][0]["src"])
             else:
                 print("No file!")
+            print
         print
+
 
