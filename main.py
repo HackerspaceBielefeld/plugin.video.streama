@@ -62,6 +62,25 @@ for i in range (0, len(newreleases_json)):
 print
 print
 
+# search media
+searchstring = 'bunny'
+
+search = opener.open(streamaurl + '/dash/searchMedia.json?query=' + searchstring)
+search_json = json.loads(search.read())
+
+print('I found ' + str(len(search_json["movies"])) + ' movies!')
+for i in range (0, len(search_json["movies"])):
+    print(search_json["movies"][i]["title"])
+    print(search_json["movies"][i]["files"][0]["src"])
+
+print('I found ' + str(len(search_json["shows"])) + ' shows!')
+for i in range (0, len(search_json["shows"])):
+    print(search_json["shows"][i]["name"])
+    print('Show-ID: ' + str(search_json["shows"][i]["id"]))
+
+print
+
+
 # count the movies
 print("There are " + str(len(movies_json)) + " Movies!")
 
