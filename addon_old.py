@@ -31,13 +31,8 @@ opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
 opener.open(streamaurl + '/login/authenticate', login_data)
 
-VIDEOS = {'New': [],
-            'Movies': [],
-            'Shows': [],
-            'Genres': []}
-
 movies = opener.open(streamaurl + '/dash/listMovies.json')
-VIDEOS['Movies'] = json.loads(movies.read())
+movies_json = json.loads(movies.read())
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
@@ -48,6 +43,58 @@ _handle = int(sys.argv[1])
 # Here we use a fixed set of properties simply for demonstrating purposes
 # In a "real life" plugin you will need to get info and links to video files/streams
 # from some web-site or online service.
+VIDEOS = {'New': [{'name': 'Crab',
+                       'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/04/crab-screenshot.jpg',
+                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/04/crab.mp4',
+                       'genre': 'Animals'},
+                      {'name': 'Alligator',
+                       'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/04/alligator-screenshot.jpg',
+                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/04/alligator.mp4',
+                       'genre': 'Animals'},
+                      {'name': 'Turtle',
+                       'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/04/turtle-screenshot.jpg',
+                       'video': 'http://www.vidsplay.com/wp-content/uploads/2017/04/turtle.mp4',
+                       'genre': 'Animals'}
+                      ],
+            'Movies': [{'name': 'Postal Truck',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/us_postal.mp4',
+                      'genre': 'Cars'},
+                     {'name': 'Traffic',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic1-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic1.mp4',
+                      'genre': 'Cars'},
+                     {'name': 'Traffic Arrows',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/traffic_arrows.mp4',
+                      'genre': 'Cars'}
+                     ],
+            'Shows': [{'name': 'Chicken',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbq_chicken-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbqchicken.mp4',
+                      'genre': 'Food'},
+                     {'name': 'Hamburger',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger.mp4',
+                      'genre': 'Food'},
+                     {'name': 'Pizza',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza.mp4',
+                      'genre': 'Food'}
+                      ],
+            'Genres': [{'name': 'Chicken',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbq_chicken-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/bbqchicken.mp4',
+                      'genre': 'Food'},
+                     {'name': 'Hamburger',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/hamburger.mp4',
+                      'genre': 'Food'},
+                     {'name': 'Pizza',
+                      'thumb': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza-screenshot.jpg',
+                      'video': 'http://www.vidsplay.com/wp-content/uploads/2017/05/pizza.mp4',
+                      'genre': 'Food'}
+                     ]}
 
 # STRVIDEOS = opener.open('https://streama.example.net/dash/listGenres.json')
 # streama output genres
@@ -80,8 +127,8 @@ def get_categories():
     :return: The list of video categories
     :rtype: list
     """
-    # return movies_json
-    return VIDEOS.iterkeys()
+    return movies.iterkeys()
+    #return VIDEOS.iterkeys()
     # return STRVIDEOS.iterkeys()
 
 
@@ -116,9 +163,9 @@ def list_categories():
         # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
         # Here we use the same image for all items for simplicity's sake.
         # In a real-life plugin you need to set each image accordingly.
-        # list_item.setArt({'thumb': VIDEOS[category][0]['thumb'],
-        #                  'icon': VIDEOS[category][0]['thumb'],
-        #                  'fanart': VIDEOS[category][0]['thumb']})
+        list_item.setArt({'thumb': VIDEOS[category][0]['thumb'],
+                          'icon': VIDEOS[category][0]['thumb'],
+                          'fanart': VIDEOS[category][0]['thumb']})
         # Set additional info for the list item.
         # Here we use a category name for both properties for for simplicity's sake.
         # setInfo allows to set various information for an item.
@@ -147,27 +194,22 @@ def list_videos(category):
     """
     # Get the list of videos in the category.
     videos = get_videos(category)
-    
     # Iterate through videos.
     for video in videos:
         # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=video['title'])
+        list_item = xbmcgui.ListItem(label=video['name'])
         # Set additional info for the list item.
-        list_item.setInfo('video', {'title': video['title'], 'genre': 'Test'})
+        list_item.setInfo('video', {'title': video['name'], 'genre': video['genre']})
         # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
         # Here we use the same image for all items for simplicity's sake.
         # In a real-life plugin you need to set each image accordingly.
-        list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': video['backdrop_path']})
+        list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
         # Set 'IsPlayable' property to 'true'.
         # This is mandatory for playable items!
         list_item.setProperty('IsPlayable', 'true')
         # Create a URL for a plugin recursive call.
         # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/wp-content/uploads/2017/04/crab.mp4
-        videosrc = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.720p.webm'
-        #movie = opener.open(streamaurl + '/video/show.json?id=' + str(video['id']))
-        #movie_json = json.loads(movie.read())
-        #videosrc = movie_json['files'][0]['src'])
-        url = get_url(action='play', video=videosrc)
+        url = get_url(action='play', video=video['video'])
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
