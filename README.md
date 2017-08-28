@@ -1,6 +1,8 @@
 # plugin.video.streama
 This is a [Kodi](https://github.com/xbmc) video addon to view content hosted with [Streama](https://github.com/dularion/streama).
 
+__STATUS WARNING:__ experimental
+
 ## Compatibility
 Krypton (Kodi 17.x) and up
 
