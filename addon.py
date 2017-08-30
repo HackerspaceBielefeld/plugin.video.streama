@@ -25,27 +25,29 @@ streamaurl = addon.getSetting('url')
 username = addon.getSetting('username')
 password = addon.getSetting('password')
 
+VIDEOS = {'Shows': [],
+            'Movies': [],
+            'Generic Videos': [],
+            'Genres': [],
+            'New Releases': []}
+
+
+# Get the list of Movies from Streama
+# movies = opener.open(streamaurl + '/dash/listMovies.json')
+# Put the list of movies into the category list
+# VIDEOS['Movies'] = json.loads(movies.read())
+
+# Get the plugin url in plugin:// notation.
+_url = sys.argv[0]
+# Get the plugin handle as an integer number.
+_handle = int(sys.argv[1])
+
 # Initialize the authentication
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
 # Authenticate
 opener.open(streamaurl + '/login/authenticate', login_data)
-
-VIDEOS = {'New': [],
-            'Movies': [],
-            'Shows': [],
-            'Genres': []}
-
-# Get the list of Movies from Streama
-movies = opener.open(streamaurl + '/dash/listMovies.json')
-# Put the list of movies into the category list
-VIDEOS['Movies'] = json.loads(movies.read())
-
-# Get the plugin url in plugin:// notation.
-_url = sys.argv[0]
-# Get the plugin handle as an integer number.
-_handle = int(sys.argv[1])
 
 def get_url(**kwargs):
     """
@@ -92,7 +94,31 @@ def get_videos(category):
     :return: the list of videos in the category
     :rtype: list
     """
-    return VIDEOS[category]
+
+    if category == 'Shows':
+        items = opener.open(streamaurl + '/dash/listShows.json')
+        videolist = json.loads(items.read())
+        return videolist
+    elif category == 'Movies':
+        items = opener.open(streamaurl + '/dash/listMovies.json')
+        videolist = json.loads(items.read())
+        return videolist
+    elif category == 'Generic Videos':
+        items = opener.open(streamaurl + '/dash/listGenericVideos.json')
+        videolist = json.loads(items.read())
+        return videolist
+    elif category == 'Genres':
+        items = opener.open(streamaurl + '/dash/listGenres.json')
+        videolist = json.loads(items.read())
+        return videolist
+    elif category == 'New Releases':
+        items = opener.open(streamaurl + '/dash/listNewReleases.json')
+        videolist = json.loads(items.read())
+        return videolist
+    else:
+        items = []
+        videolist = json.loads(items.read())
+        return videolist
 
 
 def list_categories():
