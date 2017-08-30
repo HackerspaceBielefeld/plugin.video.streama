@@ -205,16 +205,15 @@ def play_video(id):
     :param id: Streama video id
     :type id: int
     """
-    # Authentication TODO
-    opener.open(streamaurl + '/login/authenticate', login_data)
     # Get the JSON for the corresponding video from Streama
     movie = opener.open(streamaurl + '/video/show.json?id=' + id)
     # Create the path from resulting info
     movie_json = json.loads(movie.read())
     path = movie_json['files'][0]['src']
-    # Authentication TODO this wan't work ...
-    path = path.replace("https://","")
-    path = 'https://' + username + ':' + password + '@' + path
+
+    # if path contains streamaurl, append sessionid-cookie and remember_me-cookie for auth
+    if path.find(streamaurl) != -1:
+        path = path + '|Cookie=JSESSIONID%3D' + sessionid[1] + '%3Bstreama_remember_me%3D' + remember_me[1] + '%3B'
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
     # Pass the item to the Kodi player.
