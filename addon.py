@@ -4,7 +4,6 @@
 # Created on: 24.08.2017
 # License: MIT
 
-
 from __future__ import print_function
 
 import json
@@ -26,9 +25,11 @@ streamaurl = addon.getSetting('url')
 username = addon.getSetting('username')
 password = addon.getSetting('password')
 
+# Initialize the authentication
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
+# Authenticate
 opener.open(streamaurl + '/login/authenticate', login_data)
 
 VIDEOS = {'New': [],
@@ -36,23 +37,15 @@ VIDEOS = {'New': [],
             'Shows': [],
             'Genres': []}
 
+# Get the list of Movies from Streama
 movies = opener.open(streamaurl + '/dash/listMovies.json')
+# Put the list of movies into the category list
 VIDEOS['Movies'] = json.loads(movies.read())
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
 # Get the plugin handle as an integer number.
 _handle = int(sys.argv[1])
-
-# Free sample videos are provided by www.vidsplay.com
-# Here we use a fixed set of properties simply for demonstrating purposes
-# In a "real life" plugin you will need to get info and links to video files/streams
-# from some web-site or online service.
-
-# STRVIDEOS = opener.open('https://streama.example.net/dash/listGenres.json')
-# streama output genres
-#[{"id":1,"apiId":28,"name":"Action"},{"id":2,"apiId":12,"name":"Adventure"},{"id":3,"apiId":16,"name":"Animation"},{"id":4,"apiId":35,"name":"Comedy"},{"id":5,"apiId":80,"name":"Crime"},{"id":6,"apiId":99,"name":"Documentary"},{"id":7,"apiId":18,"name":"Drama"},{"id":8,"apiId":10751,"name":"Family"},{"id":9,"apiId":14,"name":"Fantasy"},{"id":10,"apiId":36,"name":"History"},{"id":11,"apiId":27,"name":"Horror"},{"id":12,"apiId":10402,"name":"Music"},{"id":13,"apiId":9648,"name":"Mystery"},{"id":14,"apiId":10749,"name":"Romance"},{"id":15,"apiId":878,"name":"Science Fiction"},{"id":16,"apiId":10770,"name":"TV Movie"},{"id":17,"apiId":53,"name":"Thriller"},{"id":18,"apiId":10752,"name":"War"},{"id":19,"apiId":37,"name":"Western"},{"id":20,"apiId":10759,"name":"Action & Adventure"},{"id":21,"apiId":10762,"name":"Kids"},{"id":22,"apiId":10763,"name":"News"},{"id":23,"apiId":10764,"name":"Reality"},{"id":24,"apiId":10765,"name":"Sci-Fi & Fantasy"},{"id":25,"apiId":10766,"name":"Soap"},{"id":26,"apiId":10767,"name":"Talk"},{"id":27,"apiId":10768,"name":"War & Politics"}]
-
 
 def get_url(**kwargs):
     """
@@ -80,9 +73,8 @@ def get_categories():
     :return: The list of video categories
     :rtype: list
     """
-    # return movies_json
+    # return the list of categories
     return VIDEOS.iterkeys()
-    # return STRVIDEOS.iterkeys()
 
 
 def get_videos(category):
@@ -182,15 +174,19 @@ def list_videos(category):
 
 def play_video(id):
     """
-    Play a video by the provided path.
+    Play a video by the provided id.
 
-    :param path: Fully-qualified video URL
-    :type path: str
+    :param id: Streama video id
+    :type id: int
     """
+    # Authentication TODO
     opener.open(streamaurl + '/login/authenticate', login_data)
+    # Get the JSON for the corresponding video from Streama
     movie = opener.open(streamaurl + '/video/show.json?id=' + id)
+    # Create the path from resulting info
     movie_json = json.loads(movie.read())
     path = movie_json['files'][0]['src']
+    # Authentication TODO this wan't work ...
     path = path.replace("https://","")
     path = 'https://' + username + ':' + password + '@' + path
     # Create a playable item with a path to play.
@@ -233,23 +229,3 @@ if __name__ == '__main__':
     # Call the router function and pass the plugin call parameters to it.
     # We use string slicing to trim the leading '?' from the plugin call paramstring
     router(sys.argv[2][1:])
-
-
-# cj = cookielib.CookieJar()
-# opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-# login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
-# opener.open('https://streama.example.net/login/authenticate', login_data)
-
-# shows = opener.open('https://streama.example.net/dash/listShows.json')
-# movies = opener.open('https://streama.example.net/dash/listMovies.json')
-# genericmovies = opener.open('https://streama.example.net/dash/listGenericVideos.json')
-# genres = opener.open('https://streama.example.net/dash/listGenres.json')
-
-# https://streama.example.net/tvShow/episodesForTvShow.json?id=35
-# https://streama.example.net/video/show.json?id=130
-# https://streama.example.net/dash/searchMedia.json?query=crowd
-
-# print shows.read()
-# print movies.read()
-# print genericmovies.read()
-# print genres.read()
