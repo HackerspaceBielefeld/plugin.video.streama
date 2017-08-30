@@ -195,7 +195,6 @@ def play_video(id):
     # if path contains streamaurl, append sessionid-cookie and remember_me-cookie for auth
     if path.find(streamaurl) != -1:
         path = path + '|Cookie=JSESSIONID%3D' + sessionid[1] + '%3Bstreama_remember_me%3D' + remember_me[1] + '%3B'
-    path = path.replace("https://","")
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
     # Pass the item to the Kodi player.
