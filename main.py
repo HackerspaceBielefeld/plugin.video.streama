@@ -27,6 +27,25 @@ opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
 opener.open(streamaurl + '/login/authenticate', login_data)
 
+print(cj)
+
+print
+
+cookiestring = str(cj).split(" ")
+
+#print JSESSIONID and streama_remember_me
+sessionid = cookiestring[1].split("JSESSIONID=")
+remember_me = cookiestring[5].split("streama_remember_me=")
+
+# cookies can be passed to the kodi player with
+# <url>|Cookie=JSESSIONID%3D<sessionid>%3Bstreama_remember_me%3D<remember_me>%3B
+
+
+print sessionid[1]
+print remember_me[1]
+
+sys.exit()
+
 # read 
 shows = opener.open(streamaurl + '/dash/listShows.json')
 movies = opener.open(streamaurl + '/dash/listMovies.json')
