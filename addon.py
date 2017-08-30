@@ -177,38 +177,59 @@ def list_videos(category):
     # Get the list of videos in the category.
     videos = get_videos(category)
 
-    # Iterate through videos.
-    for video in videos:
-        # Create a list item with a text label and a thumbnail image.
-        list_item = xbmcgui.ListItem(label=video['title'])
-        # Set additional info for the list item.
-        list_item.setInfo('video', {'title': video['title'], 'genre': 'Test'})
-        # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
-        # Here we use the same image for all items for simplicity's sake.
-        # In a real-life plugin you need to set each image accordingly.
-        list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': 'https://image.tmdb.org/t/p/w1280//' + video['backdrop_path']})
-        # Set 'IsPlayable' property to 'true'.
-        # This is mandatory for playable items!
-        list_item.setProperty('IsPlayable', 'true')
-        # Create a URL for a plugin recursive call.
-        # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/wp-content/uploads/2017/04/crab.mp4
-        # videosrc = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.720p.webm'
-        #movie = opener.open(streamaurl + '/video/show.json?id=' + str(video['id']))
-        #movie_json = json.loads(movie.read())
-        #videosrc = movie_json['files'][0]['src'])
-        id = video['id']
+    if category == 'Shows':
+        foo = 42
+    elif category == 'Movies':
+        # Iterate through videos.
+        for video in videos:
+            # Create a list item with a text label and a thumbnail image.
+            list_item = xbmcgui.ListItem(label=video['title'])
+            # Set additional info for the list item.
+            list_item.setInfo('video', {'title': video['title'], 'genre': 'Test'})
+            # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
+            # Here we use the same image for all items for simplicity's sake.
+            # In a real-life plugin you need to set each image accordingly.
+            list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': 'https://image.tmdb.org/t/p/w1280//' + video['backdrop_path']})
+            # Set 'IsPlayable' property to 'true'.
+            # This is mandatory for playable items!
+            list_item.setProperty('IsPlayable', 'true')
+            # Create a URL for a plugin recursive call.
+            # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/wp-content/uploads/2017/04/crab.mp4
+            # videosrc = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.720p.webm'
+            #movie = opener.open(streamaurl + '/video/show.json?id=' + str(video['id']))
+            #movie_json = json.loads(movie.read())
+            #videosrc = movie_json['files'][0]['src'])
+            id = video['id']
 
         
-        url = get_url(action='play', video=id)
+            url = get_url(action='play', video=id)
         
-        # Add the list item to a virtual Kodi folder.
-        # is_folder = False means that this item won't open any sub-list.
-        is_folder = False
-        # Add our item to the Kodi virtual folder listing.
-        xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
-    # Add a sort method for the virtual folder items (alphabetically, ignore articles)
+            # Add the list item to a virtual Kodi folder.
+            # is_folder = False means that this item won't open any sub-list.
+            is_folder = False
+            # Add our item to the Kodi virtual folder listing.
+            xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+
+    elif category == 'Generic Videos':
+        for video in videos:
+            # Create a list item with a text label and a thumbnail image.
+            list_item = xbmcgui.ListItem(label=video['title'])
+            # Set additional info for the list item.
+            list_item.setInfo('video', {'title': video['title'], 'genre': 'Test'})
+            #list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': 'https://image.tmdb.org/t/p/w1280//' + video['backdrop_path']})
+            list_item.setProperty('IsPlayable', 'true')
+            id = video['id']
+
+            url = get_url(action='play', video=id)
+            is_folder = False
+            xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+
+    elif category == 'Genres':
+        foo = 21
+        
+    elif category == 'New Releases':
+        foo = 7
     xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
-    # Finish creating a virtual folder.
     xbmcplugin.endOfDirectory(_handle)
 
 
