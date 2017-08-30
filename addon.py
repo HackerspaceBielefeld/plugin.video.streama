@@ -25,6 +25,17 @@ streamaurl = addon.getSetting('url')
 username = addon.getSetting('username')
 password = addon.getSetting('password')
 
+# Initialize the authentication
+cj = cookielib.CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
+# Authenticate
+opener.open(streamaurl + '/login/authenticate', login_data)
+
+cookiestring = str(cj).split(" ")
+sessionid = cookiestring[1].split("JSESSIONID=")
+remember_me = cookiestring[5].split("streama_remember_me=")
+
 VIDEOS = {'Shows': [],
             'Movies': [],
             'Generic Videos': [],
@@ -186,7 +197,10 @@ def list_videos(category):
         #movie_json = json.loads(movie.read())
         #videosrc = movie_json['files'][0]['src'])
         id = video['id']
+
+        
         url = get_url(action='play', video=id)
+        
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
