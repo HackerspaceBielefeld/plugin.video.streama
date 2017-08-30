@@ -32,6 +32,10 @@ login_data = urllib.urlencode({'username' : username, 'password' : password, 're
 # Authenticate
 opener.open(streamaurl + '/login/authenticate', login_data)
 
+cookiestring = str(cj).split(" ")
+sessionid = cookiestring[1].split("JSESSIONID=")
+remember_me = cookiestring[5].split("streama_remember_me=")
+
 VIDEOS = {'New': [],
             'Movies': [],
             'Shows': [],
@@ -160,7 +164,12 @@ def list_videos(category):
         #movie_json = json.loads(movie.read())
         #videosrc = movie_json['files'][0]['src'])
         id = video['id']
+
+        
         url = get_url(action='play', video=id)
+        
+        if url.find(streamaurl) != -1:
+            url = url + '|Cookie=JSESSIONID%3D' + sessionid[1] + '%3Bstreama_remember_me%3D' + remember_me[1] + '%3B'
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
