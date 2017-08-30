@@ -133,7 +133,7 @@ def list_categories():
         # Add our item to the Kodi virtual folder listing.
         xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
     # Add a sort method for the virtual folder items (alphabetically, ignore articles)
-    xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+    # xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     # Finish creating a virtual folder.
     xbmcplugin.endOfDirectory(_handle)
 
@@ -147,7 +147,7 @@ def list_videos(category):
     """
     # Get the list of videos in the category.
     videos = get_videos(category)
-    
+
     # Iterate through videos.
     for video in videos:
         # Create a list item with a text label and a thumbnail image.
@@ -163,11 +163,12 @@ def list_videos(category):
         list_item.setProperty('IsPlayable', 'true')
         # Create a URL for a plugin recursive call.
         # Example: plugin://plugin.video.example/?action=play&video=http://www.vidsplay.com/wp-content/uploads/2017/04/crab.mp4
-        videosrc = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.720p.webm'
+        # videosrc = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.720p.webm'
         #movie = opener.open(streamaurl + '/video/show.json?id=' + str(video['id']))
         #movie_json = json.loads(movie.read())
         #videosrc = movie_json['files'][0]['src'])
-        url = get_url(action='play', video=videosrc)
+        id = video['id']
+        url = get_url(action='play', video=id)
         # Add the list item to a virtual Kodi folder.
         # is_folder = False means that this item won't open any sub-list.
         is_folder = False
@@ -179,13 +180,19 @@ def list_videos(category):
     xbmcplugin.endOfDirectory(_handle)
 
 
-def play_video(path):
+def play_video(id):
     """
     Play a video by the provided path.
 
     :param path: Fully-qualified video URL
     :type path: str
     """
+    opener.open(streamaurl + '/login/authenticate', login_data)
+    movie = opener.open(streamaurl + '/video/show.json?id=' + id)
+    movie_json = json.loads(movie.read())
+    path = movie_json['files'][0]['src']
+    path = path.replace("https://","")
+    path = 'https://' + username + ':' + password + '@' + path
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
     # Pass the item to the Kodi player.
