@@ -90,7 +90,7 @@ def get_categories():
     return VIDEOS.iterkeys()
 
 
-def get_videos(category):
+def get_videos(category, showid):
     """
     Get the list of videofiles/streams.
 
@@ -108,6 +108,10 @@ def get_videos(category):
 
     if category == 'Shows':
         items = opener.open(streamaurl + '/dash/listShows.json')
+        videolist = json.loads(items.read())
+        return videolist
+    elif category == 'Episodes':
+        items = opener.open(streamaurl + '/tvShow/EpisodesForTvShow.json?id=' + showid)
         videolist = json.loads(items.read())
         return videolist
     elif category == 'Movies':
@@ -156,7 +160,7 @@ def list_categories():
         list_item.setInfo('video', {'title': category, 'genre': category})
         # Create a URL for a plugin recursive call.
         # Example: plugin://plugin.video.example/?action=listing&category=Animals
-        url = get_url(action='listing', category=category)
+        url = get_url(action='listing', category=category, showid=0)
         # is_folder = True means that this item opens a sub-list of lower level items.
         is_folder = True
         # Add our item to the Kodi virtual folder listing.
@@ -167,7 +171,7 @@ def list_categories():
     xbmcplugin.endOfDirectory(_handle)
 
 
-def list_videos(category):
+def list_videos(category, showid):
     """
     Create the list of playable videos in the Kodi interface.
 
@@ -175,16 +179,27 @@ def list_videos(category):
     :type category: str
     """
     # Get the list of videos in the category.
-    videos = get_videos(category)
+    videos = get_videos(category, showid)
 
     if category == 'Shows':
         for video in videos:
             list_item = xbmcgui.ListItem(label=video['name'])
             list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path']})
             id = video['id']
-            url = get_url(action='play', video=id)
+            url = get_url(action='listing', category='Episodes', showid=id)
             is_folder = True
             xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+    elif category == 'Episodes':
+        for video in videos:
+            if video['hasFile'] == 1:
+                list_item = xbmcgui.ListItem(label=video['name'])
+                list_item.setInfo('video', {'title': video['name'], 'genre': 'Test'})
+                list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w300//' + video['still_path'], 'icon': 'https://image.tmdb.org/t/p/w300//' + video['still_path'], 'fanart': 'https://image.tmdb.org/t/p/w300//' + video['still_path']})
+                list_item.setProperty('IsPlayable', 'true')
+                id = video['id']
+                url = get_url(action='play', video=id)
+                is_folder = False
+                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
     elif category == 'Movies':
         # Iterate through videos.
         for video in videos:
@@ -207,9 +222,9 @@ def list_videos(category):
             #videosrc = movie_json['files'][0]['src'])
             id = video['id']
 
-        
+
             url = get_url(action='play', video=id)
-        
+
             # Add the list item to a virtual Kodi folder.
             # is_folder = False means that this item won't open any sub-list.
             is_folder = False
@@ -297,7 +312,7 @@ def router(paramstring):
     if params:
         if params['action'] == 'listing':
             # Display the list of videos in a provided category.
-            list_videos(params['category'])
+            list_videos(params['category'], params['showid'])
         elif params['action'] == 'play':
             # Play a video from a provided URL.
             play_video(params['video'])
