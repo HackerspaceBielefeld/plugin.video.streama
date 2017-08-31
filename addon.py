@@ -192,8 +192,8 @@ def list_videos(category, showid):
     elif category == 'Episodes':
         for video in videos:
             if video['hasFile'] == 1:
-                list_item = xbmcgui.ListItem(label=video['name'])
-                list_item.setInfo('video', {'title': video['name'], 'genre': 'Test'})
+                list_item = xbmcgui.ListItem(label='S'+str(video['season_number'])+'E'+str(video['episode_number'])+' '+video['name'])
+                list_item.setInfo('video', {'title': 'S'+str(video['season_number'])+'E'+str(video['episode_number'])+' '+video['name'], 'genre': 'Test'})
                 list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w300//' + video['still_path'], 'icon': 'https://image.tmdb.org/t/p/w300//' + video['still_path'], 'fanart': 'https://image.tmdb.org/t/p/w300//' + video['still_path']})
                 list_item.setProperty('IsPlayable', 'true')
                 id = video['id']
