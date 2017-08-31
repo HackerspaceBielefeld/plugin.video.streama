@@ -178,7 +178,13 @@ def list_videos(category):
     videos = get_videos(category)
 
     if category == 'Shows':
-        foo = 42
+        for video in videos:
+            list_item = xbmcgui.ListItem(label=video['name'])
+            list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path']})
+            id = video['id']
+            url = get_url(action='play', video=id)
+            is_folder = True
+            xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
     elif category == 'Movies':
         # Iterate through videos.
         for video in videos:
