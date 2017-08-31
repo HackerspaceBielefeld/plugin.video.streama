@@ -239,7 +239,23 @@ def list_videos(category):
             xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
 
     elif category == 'New Releases':
-        foo = 7
+        for video in videos:
+            try:
+                list_item = xbmcgui.ListItem(label=video['movie']['title'])
+                id = video['movie']['id']
+                is_folder = False
+            except:
+                foo = 23
+            try:
+                list_item =xbmcgui.ListItem(label=video['tvShow']['name'])
+                id = video['tvShow']['id']
+                is_folder = True
+            except:
+                foo = 42
+            list_item.setProperty('IsPlayable', 'true')
+            url = get_url(action='play', video=id)
+            xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+
     xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     xbmcplugin.endOfDirectory(_handle)
 
