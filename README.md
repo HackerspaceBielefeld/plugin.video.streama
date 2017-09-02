@@ -24,7 +24,7 @@ See [Kodi Wiki](http://kodi.wiki/view/Add-on_manager)
 * Movies
 * Series
 * Generic Videos
-* New Releases (for movies)
+* New Releases
 
 ## Todo ##
 * Search

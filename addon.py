@@ -258,18 +258,20 @@ def list_videos(category, showid):
             try:
                 list_item = xbmcgui.ListItem(label=video['movie']['title'])
                 id = video['movie']['id']
+                url = get_url(action='play', video=id)
                 is_folder = False
+                list_item.setProperty('IsPlayable', 'true')
+                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
             except:
                 foo = 23
             try:
-                list_item =xbmcgui.ListItem(label=video['tvShow']['name'])
+                list_item = xbmcgui.ListItem(label=video['tvShow']['name'])
                 id = video['tvShow']['id']
+                url = get_url(action='listing', category='Episodes', showid=id)
                 is_folder = True
+                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
             except:
                 foo = 42
-            list_item.setProperty('IsPlayable', 'true')
-            url = get_url(action='play', video=id)
-            xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
 
     xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     xbmcplugin.endOfDirectory(_handle)
