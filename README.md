@@ -19,5 +19,19 @@ You will need to configure the following to view your content:
 
 See [Kodi Wiki](http://kodi.wiki/view/Add-on_manager)
 
+
+## Already working
+* Movies
+* Series
+* Generic Videos
+* New Releases (for movies)
+
+## Todo ##
+* Search
+* Genres
+* More infos
+* Error handling
+* Several small things
+
 ## Discussion
 Please see our [thread at the Kodi Forum](https://forum.kodi.tv/showthread.php?tid=320484)
