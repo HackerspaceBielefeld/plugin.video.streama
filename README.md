@@ -25,9 +25,9 @@ See [Kodi Wiki](http://kodi.wiki/view/Add-on_manager)
 * Series
 * Generic Videos
 * New Releases
+* Search
 
 ## Todo ##
-* Search
 * Genres
 * More infos
 * Error handling

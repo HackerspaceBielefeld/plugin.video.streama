@@ -36,7 +36,8 @@ cookiestring = str(cj).split(" ")
 sessionid = cookiestring[1].split("JSESSIONID=")
 remember_me = cookiestring[5].split("streama_remember_me=")
 
-VIDEOS = {'Shows': [],
+VIDEOS = {'Search': [],
+            'Shows': [],
             'Movies': [],
             'Generic Videos': [],
             'Genres': [],
@@ -128,6 +129,13 @@ def get_videos(category, showid):
         return videolist
     elif category == 'New Releases':
         items = opener.open(streamaurl + '/dash/listNewReleases.json')
+        videolist = json.loads(items.read())
+        return videolist
+    elif category == 'Search':
+        dialog = xbmcgui.Dialog()
+        searchstring = dialog.input('Search:', type=xbmcgui.INPUT_ALPHANUM)
+        searchstring = urllib.quote_plus(searchstring)
+        items = opener.open(streamaurl + '/dash/searchMedia.json?query=' + searchstring)
         videolist = json.loads(items.read())
         return videolist
     else:
@@ -272,6 +280,45 @@ def list_videos(category, showid):
                 xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
             except:
                 foo = 42
+            #list_item.setProperty('IsPlayable', 'true')
+            #url = get_url(action='play', video=id)
+            #xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+
+    elif category == 'Search':
+        if len(videos['shows']) != 0:
+            for i in range (0, len(videos['shows'])):
+                list_item = xbmcgui.ListItem(label=videos['shows'][i]['name'])
+                id = videos['shows'][i]['id']
+                url = get_url(action='listing', category='Episodes', showid=id)
+                is_folder = True
+                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+        if len(videos['movies']) !=0:
+            for i in range (0, len(videos['movies'])):
+                list_item = xbmcgui.ListItem(label=videos['movies'][i]['title'])
+                id = videos['movies'][i]['id']
+                url = get_url(action='play', video=id)
+                is_folder = False
+                list_item.setProperty('IsPlayable', 'true')
+                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+
+
+#        try:
+#            list_item = xbmcgui.ListItem(label=video['movie']['title'])
+#            id = video['movie']['id']
+#                url = get_url(action='play', video=id)
+#                is_folder = False
+#                list_item.setProperty('IsPlayable', 'true')
+#                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+#            except:
+#                foo = 23
+#            try:
+#                list_item = xbmcgui.ListItem(label=video['tvShow']['name'])
+#                id = video['tvShow']['id']
+#                url = get_url(action='listing', category='Episodes', showid=id)
+#                is_folder = True
+#                xbmcplugin.addDirectoryItem(_handle, url, list_item, is_folder)
+#            except:
+#                foo = 42
 
     xbmcplugin.addSortMethod(_handle, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
     xbmcplugin.endOfDirectory(_handle)
