@@ -132,7 +132,10 @@ def list_videos(category, showid):
     if category == 'Shows':
         for video in videos:
             list_item = xbmcgui.ListItem(label=video['name'])
-            list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path']})
+            try:
+                list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path']})
+            except:
+                foo = 23
             id = video['id']
             url = get_url(action='listing', category='Episodes', showid=id)
             is_folder = True
@@ -158,7 +161,10 @@ def list_videos(category, showid):
             # Set graphics (thumbnail, fanart, banner, poster, landscape etc.) for the list item.
             # Here we use the same image for all items for simplicity's sake.
             # In a real-life plugin you need to set each image accordingly.
-            list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': 'https://image.tmdb.org/t/p/w1280//' + video['backdrop_path']})
+            try:
+                list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': 'https://image.tmdb.org/t/p/w1280//' + video['backdrop_path']})
+                except:
+                    foo = 23
             # Set 'IsPlayable' property to 'true'.
             list_item.setProperty('IsPlayable', 'true')
             # Create a URL for a plugin recursive call.
