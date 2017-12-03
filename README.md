@@ -31,7 +31,11 @@ See [Kodi Wiki](http://kodi.wiki/view/Add-on_manager)
 * Genres
 * More infos
 * Error handling
+* Access without authentication (if enabled in streama)
+* Subtitles
+* Multiple accounts
 * Several small things
+
 
 ## Discussion
 Please see our [thread at the Kodi Forum](https://forum.kodi.tv/showthread.php?tid=320484)
