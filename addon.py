@@ -163,7 +163,7 @@ def list_videos(category, showid):
             # In a real-life plugin you need to set each image accordingly.
             try:
                 list_item.setArt({'thumb': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'icon': 'https://image.tmdb.org/t/p/w500//' + video['poster_path'], 'fanart': 'https://image.tmdb.org/t/p/w1280//' + video['backdrop_path']})
-                except:
+            except:
                     foo = 23
             # Set 'IsPlayable' property to 'true'.
             list_item.setProperty('IsPlayable', 'true')
