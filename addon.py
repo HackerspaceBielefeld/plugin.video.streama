@@ -74,34 +74,34 @@ def get_videos(category, showid):
     if category == 'Shows':
         items = opener.open(streamaurl + '/dash/listShows.json')
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     elif category == 'Episodes':
         items = opener.open(streamaurl + '/tvShow/EpisodesForTvShow.json?id=' + showid)
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     elif category == 'Movies':
         items = opener.open(streamaurl + '/dash/listMovies.json')
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     elif category == 'Generic Videos':
         items = opener.open(streamaurl + '/dash/listGenericVideos.json')
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     elif category == 'Genres':
         items = opener.open(streamaurl + '/dash/listGenres.json')
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     elif category == 'New Releases':
         items = opener.open(streamaurl + '/dash/listNewReleases.json')
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     elif category == 'Search':
         dialog = xbmcgui.Dialog()
         searchstring = dialog.input('Search:', type=xbmcgui.INPUT_ALPHANUM)
         searchstring = urllib.quote_plus(searchstring)
         items = opener.open(streamaurl + '/dash/searchMedia.json?query=' + searchstring)
         videolist = json.loads(items.read())
-        return videolist
+        return videolist["list"]
     else:
         items = []
         videolist = json.loads(items.read())
