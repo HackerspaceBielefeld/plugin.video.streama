@@ -90,18 +90,18 @@ def get_videos(category, showid):
     elif category == 'Genres':
         items = opener.open(streamaurl + '/dash/listGenres.json')
         videolist = json.loads(items.read())
-        return videolist["list"]
+        return videolist
     elif category == 'New Releases':
         items = opener.open(streamaurl + '/dash/listNewReleases.json')
         videolist = json.loads(items.read())
-        return videolist["list"]
+        return videolist
     elif category == 'Search':
         dialog = xbmcgui.Dialog()
         searchstring = dialog.input('Search:', type=xbmcgui.INPUT_ALPHANUM)
         searchstring = urllib.quote_plus(searchstring)
         items = opener.open(streamaurl + '/dash/searchMedia.json?query=' + searchstring)
         videolist = json.loads(items.read())
-        return videolist["list"]
+        return videolist
     else:
         items = []
         videolist = json.loads(items.read())
