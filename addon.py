@@ -245,7 +245,7 @@ def play_video(id):
     movie = opener.open(streamaurl + '/video/show.json?id=' + id)
     # Create the path from resulting info
     movie_json = json.loads(movie.read())
-    path = movie_json['files'][0]['src']
+    path = streamaurl + movie_json['files'][0]['src']
 
     # if path contains streamaurl, append sessionid-cookie and remember_me-cookie for auth
     if path.find(streamaurl) != -1:
