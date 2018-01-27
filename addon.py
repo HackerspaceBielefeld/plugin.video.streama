@@ -79,7 +79,7 @@ def get_videos(category, showid):
     elif category == 'Episodes':
         items = opener.open(streamaurl + '/tvShow/EpisodesForTvShow.json?id=' + showid)
         videolist = json.loads(items.read())
-        return videolist["list"]
+        return videolist
     elif category == 'Movies':
         items = opener.open(streamaurl + '/dash/listMovies.json?max=' + maxval)
         videolist = json.loads(items.read())
