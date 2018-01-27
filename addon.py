@@ -24,6 +24,7 @@ addon = xbmcaddon.Addon('plugin.video.streama')
 streamaurl = addon.getSetting('url')
 username = addon.getSetting('username')
 password = addon.getSetting('password')
+maxval = addon.getSetting('maxval')
 
 # Initialize the authentication
 cj = cookielib.CookieJar()
@@ -72,7 +73,7 @@ def get_categories():
 
 def get_videos(category, showid):
     if category == 'Shows':
-        items = opener.open(streamaurl + '/dash/listShows.json')
+        items = opener.open(streamaurl + '/dash/listShows.json?max=' + maxval)
         videolist = json.loads(items.read())
         return videolist["list"]
     elif category == 'Episodes':
@@ -80,7 +81,7 @@ def get_videos(category, showid):
         videolist = json.loads(items.read())
         return videolist["list"]
     elif category == 'Movies':
-        items = opener.open(streamaurl + '/dash/listMovies.json')
+        items = opener.open(streamaurl + '/dash/listMovies.json?max=' + maxval)
         videolist = json.loads(items.read())
         return videolist["list"]
     elif category == 'Generic Videos':

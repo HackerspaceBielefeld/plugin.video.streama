@@ -30,3 +30,7 @@ msgstr "Benutzername"
 msgctxt "#30202"
 msgid "Password"
 msgstr "Passwort"
+
+msgctxt "#30203"
+msgid "max. displayed movies/shows"
+msgstr "max. angezeigte Filme/Serien"

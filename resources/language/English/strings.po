@@ -30,3 +30,7 @@ msgstr ""
 msgctxt "#30202"
 msgid "Password"
 msgstr ""
+
+msgctxt "#30203"
+msgid "max. displayed movies/shows"
+msgstr ""
