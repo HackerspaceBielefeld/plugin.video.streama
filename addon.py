@@ -29,6 +29,16 @@ maxval = addon.getSetting('maxval')
 # Initialize the authentication
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
+##NocturnalDev
+#HEADERS (fixes 403 error with https)
+opener.addheaders=[
+                    ('Accept', 'application/json, text/javascript, */*; q=0.01'),
+                    ('Content-Type', 'application/json; charset=UTF-8'),
+                    ('Connection', 'keep-alive'),
+                ]
+##
+
 login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
 # Authenticate
 opener.open(streamaurl + '/login/authenticate', login_data)
@@ -58,6 +68,16 @@ _handle = int(sys.argv[1])
 # Initialize the authentication
 cj = cookielib.CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
+##NocturnalDev
+#HEADERS (fixes 403 error with https)
+opener.addheaders=[
+                    ('Accept', 'application/json, text/javascript, */*; q=0.01'),
+                    ('Content-Type', 'application/json; charset=UTF-8'),
+                    ('Connection', 'keep-alive'),
+                ]
+##
+
 login_data = urllib.urlencode({'username' : username, 'password' : password, 'remember_me' : 'on'})
 # Authenticate
 opener.open(streamaurl + '/login/authenticate', login_data)
